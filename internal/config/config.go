@@ -11,7 +11,25 @@ type ArbitrageBotConfig struct {
 	GRPCServer 		   `yaml:"grpc_server"`
 	ArbitrageBotDB 	   `yaml:"arbitrage_db"`
 	LogConfig 		   `yaml:"log_config"`
-	BotToken	string `yanl:"bot_token"`
+	BotToken	string `yaml:"bot_token"`
+	SSOService			`yaml:"sso-service"`
+	KafkaService 		`yaml:"kafka-service"`
+	AuthzService		`yaml:"authz-service"`
+}
+
+type AuthzService struct {
+	Host string `yaml:"host"`
+	Port string	`yaml:"port"`
+}
+
+type KafkaService struct {
+	Host string `yaml:"host"`
+	Port string `yaml:"port"`
+}
+
+type SSOService struct {
+	Host string `yaml:"host"`
+	Port string `yaml:"port"`
 }
 
 type GRPCServer struct {

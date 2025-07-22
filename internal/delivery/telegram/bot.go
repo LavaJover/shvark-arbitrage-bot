@@ -43,15 +43,21 @@ func (b *Bot) Start(){
 }
 
 func (b *Bot) Notify(event kafka.DisputeEvent) {
-	order := domain.DisputeNotification{
+	dispute := domain.DisputeNotification{
 		DisputeID: event.DisputeID,
 		OrderID: event.OrderID,
-		TraderName: event.TraderName,
-		AmountFiat: event.AmountFiat,
-		Reason: event.Reason,
+		TraderID: event.TraderID,
 		ProofUrl: event.ProofUrl,
+		Reason: event.Reason,
+		Status: event.Status,
+		OrderAmountFiat: event.OrderAmountFiat,
+		DisputeAmountFiat: event.DisputeAmountFiat,
+		BankName: event.BankName,
+		Phone: event.Phone,
+		CardNumber: event.CardNumber,
+		Owner: event.Owner,
 	}
-	b.disputeChan <- order
+	b.disputeChan <- dispute
 }
 
 func (b *Bot) listenForNotifications() {

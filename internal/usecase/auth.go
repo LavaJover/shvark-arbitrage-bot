@@ -5,8 +5,6 @@ import (
 
 	"github.com/LavaJover/shvark-arbitrage-bot/internal/domain"
 	"github.com/LavaJover/shvark-arbitrage-bot/internal/grpcapi"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 type AuthUsecase struct {
@@ -33,14 +31,14 @@ func (uc *AuthUsecase) Authorize(telegramID int64, token string) (string, error)
 	if err != nil || !valid{
 		return "", fmt.Errorf("invalid token")
 	}
-	// check user permission
-	allowed, err := uc.authzClient.CheckPermission(traderID, "*", "*")
-	if err != nil {
-		return "", err
-	}
-	if !allowed {
-		return "", status.Error(codes.PermissionDenied, "not enough rights")
-	}
+	// // check user permission
+	// allowed, err := uc.authzClient.CheckPermission(traderID, "*", "*")
+	// if err != nil {
+	// 	return "", err
+	// }
+	// if !allowed {
+	// 	return "", status.Error(codes.PermissionDenied, "not enough rights")
+	// }
 	// if user got permission => we can map telegramID and traderID
 	err = uc.authRepo.SaveMapping(telegramID, traderID)
 	if err != nil {
